@@ -20,15 +20,13 @@ public class MsgReader extends Thread {
             Logger logger = new Logger();
             String entry;
 
-            while (!socket.isOutputShutdown()) {
+            while (!socket.isClosed()) {
                 entry = in.readLine();
                 System.out.println(entry);
                 logger.writeLog(new Date() + " - " + entry + "\n");
             }
-
         } catch (IOException e) {
-            System.out.println("read error");
-            System.out.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 }
