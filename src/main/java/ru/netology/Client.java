@@ -1,6 +1,7 @@
 package ru.netology;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.Socket;
 
 public class Client {
@@ -15,7 +16,6 @@ public class Client {
             System.out.print("Введите свой никнейм: ");
             out.println(reader.readLine());
 
-
             new MsgReader(clientSocket);
             while (!clientSocket.isOutputShutdown()) {
                 String entry = reader.readLine();
@@ -24,7 +24,10 @@ public class Client {
                     break;
                 }
             }
-        } catch (IOException e) {
+        } catch (ConnectException e) {
+            System.out.println("Сервер недоступен");
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
